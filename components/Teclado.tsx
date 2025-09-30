@@ -21,7 +21,7 @@ export default function Teclado({ onLetraPressionada, letrasDesabilitadas }: Tec
             onPress={() => onLetraPressionada(letra)}
             disabled={desabilitado}
           >
-            <Text style={styles.textoBotao}>{letra}</Text>
+            <Text style={[styles.textoBotao, desabilitado && styles.textoBotaoDesabilitado]}>{letra}</Text>
           </TouchableOpacity>
         );
       })}
@@ -34,34 +34,37 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginTop: 20,
-    paddingHorizontal: 5,
+    marginTop: 10,
+    paddingHorizontal: 10,
   },
   botao: {
-    width: 45,
-    height: 45,
+    width: 48,
+    height: 48,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#333333', // Fundo do botão cinza escuro
-    margin: 5,
-    borderRadius: 10,
-    // Sombra para um efeito elevado
-    shadowColor: '#000',
+    backgroundColor: '#fff',
+    margin: 4,
+    borderRadius: 12,
+    // Sombra para um efeito "saltado"
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
   },
   botaoDesabilitado: {
-    backgroundColor: '#555555', // Cinza mais claro para desabilitado
-    opacity: 0.6,
+    backgroundColor: '#bdc3c7', // Cinza claro
+    elevation: 0,
   },
   textoBotao: {
-    color: '#FFFFFF',
-    fontSize: 20,
+    color: '#3498db', // Azul
+    fontSize: 22,
     fontWeight: 'bold',
   },
+  textoBotaoDesabilitado: {
+    color: '#7f8c8d' // Cinza escuro
+  }
 });

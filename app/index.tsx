@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
 import Teclado from '@/components/Teclado';
 import Forca from '@/components/Forca';
 
-// Correção: Adicionado o tipo string[] para a constante palavras
 const palavras: string[] = [
   // Tecnologia e Programação
   'ALGORITMO', 'INTERFACE', 'BACKEND', 'FRONTEND', 'DATABASE', 'JAVASCRIPT',
@@ -52,7 +51,7 @@ const palavras: string[] = [
   'CONTADOR', 'ATOR', 'DIRETOR', 'ROTEIRISTA', 'ESCRITOR'
 ];
 
-const MAX_ERROS = 6;
+const MAX_ERROS = 10;
 
 export default function App() {
   const [palavraSecreta, setPalavraSecreta] = useState('');
@@ -112,6 +111,8 @@ export default function App() {
     }
   };
 
+  const fimDeJogo = statusJogo !== 'jogando';
+
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Jogo da Forca</Text>
@@ -121,24 +122,29 @@ export default function App() {
       <Text style={styles.palavra}>{palavraMascarada()}</Text>
       
       <View style={styles.letrasContainer}>
-        <Text style={styles.letrasTexto}>Letras erradas: {letrasIncorretas.join(', ')}</Text>
-      </View>
-
-      <Text style={styles.tentativasTexto}>Tentativas restantes: {MAX_ERROS - letrasIncorretas.length}</Text>
-      
-      {statusJogo === 'jogando' ? (
-        <Teclado onLetraPressionada={handleLetraPressionada}
-        letrasDesabilitadas={[...letrasCorretas, ...letrasIncorretas]} 
-        />
-        ) : (
-        <Text style={styles.mensagemFimDeJogo}>
-          {statusJogo === 'vitoria' ? 'Você venceu! 🎉' : 'Você perdeu! 😢'}
+        <Text style={styles.letrasTexto}>
+          Letras erradas: {letrasIncorretas.join(', ')}
         </Text>
-        )}
-
-      <View style={styles.botaoReiniciarContainer}>
-        <Button title="Reiniciar Jogo" onPress={iniciarJogo} color="#841584" />
       </View>
+      
+      {fimDeJogo ? (
+        <>
+          <Text style={[
+              styles.mensagemFimDeJogo, 
+              { color: statusJogo === 'vitoria' ? '#2ecc71' : '#e74c3c' }
+            ]}>
+            {statusJogo === 'vitoria' ? 'Você venceu! 🎉' : 'Você perdeu! 😢'}
+          </Text>
+          <TouchableOpacity style={styles.botaoReiniciar} onPress={iniciarJogo}>
+            <Text style={styles.textoBotaoReiniciar}>Jogar Novamente</Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <Teclado 
+          onLetraPressionada={handleLetraPressionada}
+          letrasDesabilitadas={[...letrasCorretas, ...letrasIncorretas]} 
+        />
+      )}
     </View>
   );
 }
@@ -148,49 +154,58 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#121212',
+    backgroundColor: '#F7F9FC', // Um fundo branco-azulado suave
     padding: 10,
   },
   titulo: {
-    fontSize: 36,
+    fontSize: 42,
     fontWeight: 'bold',
+    color: '#34495e', // Azul escuro
     marginBottom: 20,
-    color: '#FFFFFF',
-    fontFamily: 'monospace',
   },
   palavra: {
-    fontSize: 38,
+    fontSize: 40,
     fontWeight: 'bold',
     letterSpacing: 10,
     marginBottom: 20,
-    color: '#E0E0E0',
+    color: '#2c3e50', // Quase preto
     textAlign: 'center'
   },
   letrasContainer: {
     minHeight: 30,
     marginBottom: 10,
+    paddingHorizontal: 20,
   },
   letrasTexto: {
-    fontSize: 20,
-    color: '#FF5A5F',
-    fontWeight: '600',
-  },
-  tentativasTexto: {
     fontSize: 18,
-    color: '#BDBDBD',
-    marginBottom: 20,
-  },
-  mensagemFimDeJogo: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    marginVertical: 20,
-    color: '#FFFFFF',
+    color: '#e74c3c', // Vermelho para letras erradas
+    fontWeight: '600',
     textAlign: 'center',
   },
-  botaoReiniciarContainer: {
-    marginTop: 25,
-    width: '70%',
-    borderRadius: 25,
-    overflow: 'hidden',
+  mensagemFimDeJogo: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginVertical: 20,
+    textAlign: 'center',
+  },
+  botaoReiniciar: {
+    backgroundColor: '#3498db', // Azul primário
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 30,
+    marginTop: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  textoBotaoReiniciar: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   }
 });
