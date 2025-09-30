@@ -3,7 +3,6 @@ import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 const LETRAS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-// --- ATUALIZAÇÃO: Adicionamos a prop 'letrasDesabilitadas' ---
 type TecladoProps = {
   onLetraPressionada: (letra: string) => void;
   letrasDesabilitadas: string[];
@@ -13,16 +12,13 @@ export default function Teclado({ onLetraPressionada, letrasDesabilitadas }: Tec
   return (
     <View style={styles.container}>
       {LETRAS.map((letra) => {
-        // Verifica se a letra atual já foi tentada
         const desabilitado = letrasDesabilitadas.includes(letra);
 
         return (
           <TouchableOpacity
             key={letra}
-            // --- ATUALIZAÇÃO: Aplica um estilo diferente se o botão estiver desabilitado ---
             style={[styles.botao, desabilitado && styles.botaoDesabilitado]}
             onPress={() => onLetraPressionada(letra)}
-            // --- ATUALIZAÇÃO: Desativa o botão se a letra já foi usada ---
             disabled={desabilitado}
           >
             <Text style={styles.textoBotao}>{letra}</Text>
@@ -42,21 +38,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   botao: {
-    width: 40,
-    height: 40,
+    width: 45,
+    height: 45,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#007BFF',
-    margin: 4,
-    borderRadius: 8,
+    backgroundColor: '#333333', // Fundo do botão cinza escuro
+    margin: 5,
+    borderRadius: 10,
+    // Sombra para um efeito elevado
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  // --- NOVO: Estilo para os botões desativados ---
   botaoDesabilitado: {
-    backgroundColor: '#a9a9a9', // Cinzento
+    backgroundColor: '#555555', // Cinza mais claro para desabilitado
+    opacity: 0.6,
   },
   textoBotao: {
     color: '#FFFFFF',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
   },
 });

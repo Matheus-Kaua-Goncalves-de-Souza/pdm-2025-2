@@ -8,13 +8,13 @@ type ForcaProps = {
 export default function Forca({ numeroErros }: ForcaProps) {
   return (
     <View style={styles.container}>
-      {/* Estrutura da Forca (sempre visível) */}
+      {/* Estrutura da Forca */}
       <View style={styles.posteVertical} />
       <View style={styles.vigaHorizontal} />
       <View style={styles.base} />
       <View style={styles.corda} />
 
-      {/* Partes do boneco (visibilidade condicional) */}
+      {/* Partes do boneco */}
       {numeroErros > 0 && <View style={styles.cabeca} />}
       {numeroErros > 1 && <View style={styles.corpo} />}
       {numeroErros > 2 && <View style={styles.bracoEsquerdo} />}
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   base: {
     height: 5,
     width: 150,
-    backgroundColor: '#333',
+    backgroundColor: '#8d6e63', // Cor de madeira
     position: 'absolute',
     bottom: 0,
     left: 25,
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   posteVertical: {
     height: 245,
     width: 5,
-    backgroundColor: '#333',
+    backgroundColor: '#8d6e63', // Cor de madeira
     position: 'absolute',
     bottom: 0,
     left: 50,
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   vigaHorizontal: {
     height: 5,
     width: 100,
-    backgroundColor: '#333',
+    backgroundColor: '#8d6e63', // Cor de madeira
     position: 'absolute',
     top: 0,
     left: 50,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   corda: {
     width: 5,
     height: 30,
-    backgroundColor: '#333',
+    backgroundColor: '#a1887f', // Cor de corda
     position: 'absolute',
     top: 0,
     left: 145,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     borderWidth: 5,
-    borderColor: '#333',
+    borderColor: '#FFFFFF', // Boneco branco
     position: 'absolute',
     top: 30,
     left: 125,
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   corpo: {
     width: 5,
     height: 70,
-    backgroundColor: '#333',
+    backgroundColor: '#FFFFFF', // Boneco branco
     position: 'absolute',
     top: 70,
     left: 145,
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   bracoEsquerdo: {
     width: 50,
     height: 5,
-    backgroundColor: '#333',
+    backgroundColor: '#FFFFFF', // Boneco branco
     position: 'absolute',
     top: 95,
     left: 100,
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   bracoDireito: {
     width: 50,
     height: 5,
-    backgroundColor: '#333',
+    backgroundColor: '#FFFFFF', // Boneco branco
     position: 'absolute',
     top: 95,
     left: 145,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   pernaEsquerda: {
     width: 50,
     height: 5,
-    backgroundColor: '#333',
+    backgroundColor: '#FFFFFF', // Boneco branco
     position: 'absolute',
     top: 150,
     left: 101,
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   pernaDireita: {
     width: 50,
     height: 5,
-    backgroundColor: '#333',
+    backgroundColor: '#FFFFFF', // Boneco branco
     position: 'absolute',
     top: 150,
     left: 145,

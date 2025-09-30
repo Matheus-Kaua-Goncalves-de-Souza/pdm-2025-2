@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 import Teclado from '@/components/Teclado';
 import Forca from '@/components/Forca';
 
-const palavras = [
+// Correção: Adicionado o tipo string[] para a constante palavras
+const palavras: string[] = [
   // Tecnologia e Programação
   'ALGORITMO', 'INTERFACE', 'BACKEND', 'FRONTEND', 'DATABASE', 'JAVASCRIPT',
   'PYTHON', 'FRAMEWORK', 'COMPILADOR', 'DEBUG', 'HARDWARE', 'SOFTWARE',
@@ -51,14 +52,13 @@ const palavras = [
   'CONTADOR', 'ATOR', 'DIRETOR', 'ROTEIRISTA', 'ESCRITOR'
 ];
 
-const MAX_ERROS = 6; // Definimos o número máximo de tentativas
+const MAX_ERROS = 6;
 
 export default function App() {
   const [palavraSecreta, setPalavraSecreta] = useState('');
   const [letrasCorretas, setLetrasCorretas] = useState<string[]>([]);
   const [letrasIncorretas, setLetrasIncorretas] = useState<string[]>([]);
-  // --- NOVO: Estado para controlar o status do jogo ---
-  const [statusJogo, setStatusJogo] = useState('jogando'); // pode ser 'jogando', 'vitoria', 'derrota'
+  const [statusJogo, setStatusJogo] = useState('jogando');
 
   const iniciarJogo = () => {
     const indiceAleatorio = Math.floor(Math.random() * palavras.length);
@@ -66,7 +66,6 @@ export default function App() {
     setPalavraSecreta(palavraSorteada);
     setLetrasCorretas([]);
     setLetrasIncorretas([]);
-    // --- ATUALIZAÇÃO: Reseta o status do jogo ---
     setStatusJogo('jogando');
   };
 
@@ -74,17 +73,14 @@ export default function App() {
     iniciarJogo();
   }, []);
 
-  // --- NOVO: useEffect para verificar vitória ou derrota a cada jogada ---
   useEffect(() => {
     if (palavraSecreta && statusJogo === 'jogando') {
-      // Verifica Vitória
       const todasLetrasAdivinhadas = palavraSecreta.split('').every(letra => letrasCorretas.includes(letra));
       if (todasLetrasAdivinhadas) {
         setStatusJogo('vitoria');
         Alert.alert('Parabéns!', 'Você acertou a palavra!');
       }
 
-      // Verifica Derrota
       if (letrasIncorretas.length >= MAX_ERROS) {
         setStatusJogo('derrota');
         Alert.alert('Que pena!', `Você perdeu! A palavra era: ${palavraSecreta}`);
@@ -95,7 +91,6 @@ export default function App() {
 
   const palavraMascarada = () => {
     if (!palavraSecreta) return '';
-    // Se o jogo acabou, mostra a palavra completa
     if (statusJogo !== 'jogando') {
       return palavraSecreta.split('').join(' ');
     }
@@ -106,7 +101,6 @@ export default function App() {
   };
 
   const handleLetraPressionada = (letra: string) => {
-    // Só permite jogar se o status for 'jogando'
     if (statusJogo !== 'jogando' || letrasCorretas.includes(letra) || letrasIncorretas.includes(letra)) {
       return;
     }
@@ -132,7 +126,6 @@ export default function App() {
 
       <Text style={styles.tentativasTexto}>Tentativas restantes: {MAX_ERROS - letrasIncorretas.length}</Text>
       
-      {/* O teclado só será mostrado se o jogo estiver em andamento */}
       {statusJogo === 'jogando' ? (
         <Teclado onLetraPressionada={handleLetraPressionada}
         letrasDesabilitadas={[...letrasCorretas, ...letrasIncorretas]} 
@@ -143,9 +136,8 @@ export default function App() {
         </Text>
         )}
 
-      {/* --- NOVO: Botão para reiniciar o jogo --- */}
       <View style={styles.botaoReiniciarContainer}>
-        <Button title="Reiniciar Jogo" onPress={iniciarJogo} color="#007BFF" />
+        <Button title="Reiniciar Jogo" onPress={iniciarJogo} color="#841584" />
       </View>
     </View>
   );
@@ -156,47 +148,49 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#121212',
     padding: 10,
   },
   titulo: {
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: 'bold',
-    marginBottom: 30,
-    color: '#333',
+    marginBottom: 20,
+    color: '#FFFFFF',
+    fontFamily: 'monospace',
   },
   palavra: {
-    fontSize: 34,
+    fontSize: 38,
     fontWeight: 'bold',
-    letterSpacing: 8,
-    marginBottom: 15,
-    color: '#333',
+    letterSpacing: 10,
+    marginBottom: 20,
+    color: '#E0E0E0',
     textAlign: 'center'
   },
   letrasContainer: {
-    minHeight: 30, // Garante espaço mesmo quando vazio
-    marginBottom: 5,
+    minHeight: 30,
+    marginBottom: 10,
   },
   letrasTexto: {
-    fontSize: 18,
-    color: '#d9534f',
-    fontWeight: '500',
+    fontSize: 20,
+    color: '#FF5A5F',
+    fontWeight: '600',
   },
   tentativasTexto: {
     fontSize: 18,
-    color: '#555',
+    color: '#BDBDBD',
     marginBottom: 20,
   },
   mensagemFimDeJogo: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
     marginVertical: 20,
-    color: '#333',
+    color: '#FFFFFF',
+    textAlign: 'center',
   },
   botaoReiniciarContainer: {
-    marginTop: 30,
-    width: '60%',
-    borderRadius: 8,
-    overflow: 'hidden', // Necessário para o borderRadius funcionar no Android
+    marginTop: 25,
+    width: '70%',
+    borderRadius: 25,
+    overflow: 'hidden',
   }
 });
